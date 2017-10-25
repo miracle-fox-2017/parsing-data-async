@@ -13,16 +13,26 @@ class Person {
 }
 
 class PersonParser {
-  constructor(file, callback) {
+  constructor(file) {
     this._file = file;
-    this._people = this.files(callback);
+    // this._people = this.files(callback);
+    this._people = null;
   }
 
   files(callback) {
-    const data = fs.readFile(this._file, 'utf-8', (err, data) => {
+    // this._people = [];
+    let result = [];
+
+    // console.log('in');
+    fs.readFile(this._file, 'utf-8', (err, data) => {
+      console.log('in');
       if (err) throw err;
-      callback(data);
+      // console.log(callback(data.split('\n')));
+      result = callback(data.split('\n'));
     });
+    // console.log(this._people);
+    // return this._people;
+    // return result;
   }
 
   get people() {
@@ -53,10 +63,23 @@ class PersonParser {
   }
 }
 
-const parser = new PersonParser('people.csv', data => {
+// const parser = new PersonParser('people.csv', data => {
+//   const arrPeople = [];
+
+//   for (let i = 1; i < data.length; i++) {
+//     const entity = data[i].split(',');
+//     const person = new Person(entity[0], entity[1], entity[2], entity[3], entity[4], entity[5]);
+//     arrPeople.push(person);
+//   }
+
+//   return arrPeople;
+// });
+
+const parser = new PersonParser('people.csv');
+parser.files(data => {
   const arrPeople = [];
-  
-  for (let i = 1; i < data.length; i++) {
+
+  for (let i = 0; i < data.length; i++) {
     const entity = data[i].split(',');
     const person = new Person(entity[0], entity[1], entity[2], entity[3], entity[4], entity[5]);
     arrPeople.push(person);
@@ -65,6 +88,6 @@ const parser = new PersonParser('people.csv', data => {
   return arrPeople;
 });
 
-parser.addPerson(new Person('201', 'Yofriadi', 'Yahya', 'yofriadiyahya@gmail.com', '0812-2524-5168', '2012-05-10T03:53:40-07:00'));
-parser.save();
-console.log(`There are ${parser.people.size} people in the file '${parser.file}'.`)
+// parser.addPerson(new Person('201', 'Yofriadi', 'Yahya', 'yofriadiyahya@gmail.com', '0812-2524-5168', '2012-05-10T03:53:40-07:00'));
+// parser.save();
+// console.log(`There are ${parser.people.size} people in the file '${parser.file}'.`)
