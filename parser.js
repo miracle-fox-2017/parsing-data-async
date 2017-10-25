@@ -1,5 +1,5 @@
 "use strict"
-
+const fs = require('fs');
 class Person {
   constructor(obj){
     this.id = obj.id
@@ -43,13 +43,54 @@ class PersonParser {
   }
 
   get people() {
-    return this._people
+    let object = {
+      dataPeople : this._people,
+      size       : this._people.length
+    }
+    return object
   }
 
-  addPerson() {}
+  addPerson(getData) {
+    this._people.push(getData)
+  }
+  get file() {
+    return this._file
+  }
 
+  simpan(){
+    let save = "id,first_name,last_name,email,phone,created_at,\n";
+    this._people.forEach(listData=>{
+      save+=listData.id+','
+      save+=listData.first_name+','
+      save+=listData.last_name+','
+      save+=listData.email+','
+      save+=listData.phone+','
+      save+=listData.created_at.toISOString()+','
+      save+='\n'
+    })
+    fs.writeFile('people.csv', save, (err, tersimpan) => {
+      if (err) {
+        console.log('Data gagal di simpan');
+      } else {
+        console.log('Data berhasil di simpan');
+      }
+    });
+  }
 }
 
 let parser = new PersonParser('people.csv')
-console.log(parser.people);
-// console.log(`There are ${parser.people.size} people in the file '${parser.file}'.`)
+let obj = {
+  id: 201,
+  first_name: 'Albert',
+  last_name: 'Einstein',
+  email: 'albert@setyo.com',
+  phone: 09876543221,
+  created_at: new Date()
+}
+parser.parsing(()=>{
+  // console.log(parser.people);
+  parser.addPerson(obj);
+  console.log(parser.people.dataPeople[200]);
+  console.log(`There are ${parser.people.size} people in the file '${parser.file}'.`)
+  parser.simpan()
+})
