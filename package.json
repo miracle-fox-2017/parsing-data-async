@@ -1,0 +1,22 @@
+{
+  "name": "parsing-data-async",
+  "version": "1.0.0",
+  "description": "",
+  "main": "parser.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/miracle-fox-2017/parsing-data-async.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/miracle-fox-2017/parsing-data-async/issues"
+  },
+  "homepage": "https://github.com/miracle-fox-2017/parsing-data-async#readme",
+  "dependencies": {
+    "faker": "^4.1.0"
+  }
+}
